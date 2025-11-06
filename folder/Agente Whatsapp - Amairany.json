@@ -1,0 +1,300 @@
+{
+  "active": false,
+  "connections": {
+    "WhatsApp Trigger": {
+      "main": [
+        [
+          {
+            "node": "Unified AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Unified AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Unified AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DeepSeek Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Unified AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crear evento": {
+      "ai_tool": [
+        [
+          {
+            "node": "Unified AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Comprobar disponibilidad": {
+      "ai_tool": [
+        [
+          {
+            "node": "Unified AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MCP Client": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "createdAt": "2025-10-27T02:57:43.645Z",
+  "id": "7KCsV3YelPa8ZFk6",
+  "isArchived": false,
+  "meta": null,
+  "name": "Agente Whatsapp - Amairany",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "messages"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "typeVersion": 1,
+      "position": [
+        48,
+        -160
+      ],
+      "id": "72eebe37-4d49-4fe0-90d3-eb161652ec6f",
+      "name": "WhatsApp Trigger",
+      "webhookId": "bd2217ba-e760-490a-8942-482edc782ac4",
+      "credentials": {
+        "whatsAppTriggerApi": {
+          "id": "iEEtlof5EFUptjw4",
+          "name": "WhatsApp OAuth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.messages[0].text.body }}",
+        "options": {
+          "systemMessage": "=Eres el asistente virtual de Amairany Reyes, maquillista profesional.\n\n📋 INFORMACIÓN GENERAL:\n- Nombre: Amairany Reyes\n- Profesión: Maquillista profesional certificada\n- Experiencia: 5+ años en maquillaje social, novias, eventos\n- Horario: Lunes a Sábado, 10:00 AM - 8:00 PM\n- Zona horaria: America/Mexico_City\n- Fecha y hora actual: {{ $now }}\n\n💄 SERVICIOS DISPONIBLES:\n1. Maquillaje Social - $500 MXN (1-1.5 horas)\n2. Maquillaje de Novia - $1,200 MXN (2-2.5 horas, incluye prueba)\n3. Maquillaje para Quinceañera - $800 MXN (1.5-2 horas)\n4. Maquillaje Profesional/Editorial - $700 MXN (1.5-2 horas)\n\n📝 POLÍTICAS:\n- Cancelaciones con 24h de anticipación\n- Productos de alta calidad (MAC, Morphe, etc.)\n\n🎯 TU FUNCIÓN:\n\nMODO 1: INFORMACIÓN GENERAL\nCuando el usuario pregunta sobre servicios, precios, horarios:\n- Responde de forma clara y concisa\n- Sé amable y profesional\n- Al final, ofrece: \"¿Te gustaría agendar una cita? 📅\"\n\nMODO 2: AGENDAR CITA\nCuando el usuario quiere agendar (dice: agendar, cita, reservar, disponible, etc.):\n\n**PASO 1-6: RECOLECTAR INFORMACIÓN**\nPregunta UN dato a la vez:\n1. \"¡Perfecto! ¿Cuál es tu nombre? 😊\"\n2. \"¿Qué tipo de maquillaje necesitas? (Social/Novia/Quinceañera/Editorial)\"\n3. \"¿Qué día te gustaría? (Lunes a Sábado) 📅\" - Valida que NO sea domingo\n4. \"¿A qué hora prefieres? (10:00 AM - 8:00 PM) 🕐\" - Valida horario\n5. \"¿Cuál es tu número de teléfono? 📱\"\n6. \"¿Algún detalle adicional que deba saber? (maquillaje específico, alergias, etc.)\"\n\n**PASO 7: CONFIRMAR**\nMuestra resumen:\n\"Perfecto! Confirma estos datos:\n📝 Nombre: [NOMBRE]\n💄 Servicio: [SERVICIO]\n📅 Fecha: [FECHA]\n🕐 Hora: [HORA]\n📱 Teléfono: [TELEFONO]\n📝 Notas: [NOTAS]\n\n¿Todo correcto? Responde 'Sí' para confirmar\"\n\n**PASO 8: CREAR EVENTO** ⚠️ CRÍTICO\nSOLO cuando el usuario confirma con \"sí\", \"confirmar\", \"correcto\", etc.\n\n✅ DEBES LLAMAR LA HERRAMIENTA \"Crear evento\" con estos parámetros EXACTOS:\n\nSummary: \"[NOMBRE] - Maquillaje ([TIPO_SERVICIO])\"\nDescription: \"Cliente: [NOMBRE]\\nTeléfono: [TELEFONO]\\nServicio: [TIPO_SERVICIO]\\nNotas: [NOTAS]\"\nStart: \"[FECHA]T[HORA]:00\" (formato ISO: 2025-10-31T19:00:00)\nEnd: \"[FECHA]T[HORA_+2H]:00\" (2 horas después)\n\nEjemplo si cita es 31 Oct 2025 a las 7 PM:\nStart: \"2025-10-31T19:00:00\"\nEnd: \"2025-10-31T21:00:00\"\n\nDespués de crear el evento:\n\"✅ ¡Listo! Tu cita está agendada para el [FECHA] a las [HORA]. Te esperamos! 💄✨\"\n\n🔧 MODIFICAR CITA:\nSi usuario dice \"cambiar\", \"modificar\", \"actualizar\":\n1. Pregunta qué quiere cambiar\n2. Usa la herramienta \"Comprobar disponibilidad\" para ver citas existentes\n3. Confirma los cambios\n4. Usa \"Eliminar evento\" para la cita anterior\n5. Usa \"Crear evento\" para la nueva cita\n\n❌ REGLAS CRÍTICAS:\n- Pregunta UN dato a la vez\n- NO hagas 2 preguntas en el mismo mensaje\n- VALIDA fechas (lunes-sábado) y horas (10 AM - 8 PM)\n- SOLO crea evento cuando usuario CONFIRMA explícitamente\n- Start y End SIEMPRE en formato ISO completo\n- End SIEMPRE 2 horas después de Start\n- Usa emojis moderadamente 💄✨📅🕐📱\n- Sé empático, cálido y profesional"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        304,
+        -80
+      ],
+      "id": "be5f4126-59f3-45c8-8bd8-3a06c10207bb",
+      "name": "Unified AI Agent"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('WhatsApp Trigger').item.json.messages[0].from }}",
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        352,
+        160
+      ],
+      "id": "b34c8634-016f-4db0-aa4c-2606756a1a25",
+      "name": "Postgres Chat Memory",
+      "credentials": {
+        "postgres": {
+          "id": "6M1Ivu3Wftx9X1Te",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
+      "typeVersion": 1,
+      "position": [
+        224,
+        160
+      ],
+      "id": "0a82b370-ec4d-42ab-83c7-60969dba51ac",
+      "name": "DeepSeek Chat Model",
+      "credentials": {
+        "deepSeekApi": {
+          "id": "vZe0GgvmREuRrbkv",
+          "name": "DeepSeek account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Usa esta herramienta para CREAR eventos en el calendario de Amairany. SOLO llama esta herramienta cuando el usuario CONFIRME explícitamente la cita diciendo 'sí', 'confirmar', 'correcto', etc. Requiere: Summary (título del evento), Description (detalles), Start (fecha/hora inicio en ISO), End (fecha/hora fin en ISO, 2 horas después).",
+        "calendar": {
+          "__rl": true,
+          "value": "delusivealmaximo@gmail.com",
+          "mode": "list",
+          "cachedResultName": "delusivealmaximo@gmail.com"
+        },
+        "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', `Fecha y hora de inicio en formato ISO (ej: 2025-10-31T19:00:00)`, 'string') }}",
+        "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', `Fecha y hora de fin en formato ISO, 2 horas después del inicio (ej: 2025-10-31T21:00:00)`, 'string') }}",
+        "additionalFields": {
+          "description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', `Descripción con: Cliente, Teléfono, Servicio, Notas`, 'string') }}",
+          "sendUpdates": "all",
+          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', `Título formato: [Nombre] - Maquillaje ([Tipo])`, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        464,
+        160
+      ],
+      "id": "41ab44b0-da72-49f0-be57-dd9f83df7bfc",
+      "name": "Crear evento",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "CCn94B5JxUieK6ZO",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Usa esta herramienta para VER todos los eventos del calendario en un rango de fechas. Útil para verificar disponibilidad o encontrar citas existentes. Usa Return_All: true para ver todos los eventos. After/Before en formato ISO.",
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "delusivealmaximo@gmail.com",
+          "mode": "list",
+          "cachedResultName": "delusivealmaximo@gmail.com"
+        },
+        "returnAll": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Return_All', `true para ver todos los eventos`, 'boolean') }}",
+        "timeMin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('After', `Fecha inicio búsqueda (ISO)`, 'string') }}",
+        "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Before', `Fecha fin búsqueda (ISO)`, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        576,
+        160
+      ],
+      "id": "007b9fde-63b1-44a8-976a-6aabb0bf982d",
+      "name": "Comprobar disponibilidad",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "CCn94B5JxUieK6ZO",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "822674507599302",
+        "recipientPhoneNumber": "=526674847346",
+        "textBody": "={{ $json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        688,
+        -16
+      ],
+      "id": "03700645-9bc3-4b97-8160-b941dc39f5cc",
+      "name": "Send message",
+      "webhookId": "9f1d916d-5cd5-402b-95f7-5f8d3792e8e1",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "kILEnXDyxKIKk573",
+          "name": "WhatsApp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Agente Citas - Amairany Reyes MakeUp Studio\n\n",
+        "height": 560,
+        "width": 880,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        -208
+      ],
+      "typeVersion": 1,
+      "id": "d7066e37-86e3-4a95-b773-82a43d4b8301",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "endpointUrl": "https://n8n.laformula.ovh/mcp/bb175322-bfef-45f2-9ff5-859306c7e394/sse",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1.2,
+      "position": [
+        768,
+        176
+      ],
+      "id": "0e5afc94-e6e5-43e8-92d0-f6b3d8f78467",
+      "name": "MCP Client",
+      "disabled": true
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-10-27T02:57:43.659Z",
+      "createdAt": "2025-10-27T02:57:43.659Z",
+      "role": "workflow:owner",
+      "workflowId": "7KCsV3YelPa8ZFk6",
+      "projectId": "lwGqMVviuDwSu0q0"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-10-29T02:34:29.000Z",
+  "versionId": "6fa761bc-e8b0-448e-bd63-646509038b8a"
+}

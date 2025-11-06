@@ -1,0 +1,336 @@
+{
+  "active": false,
+  "connections": {
+    "Crear evento": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Eliminar evento": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Comprobar disponibilidad": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DeepSeek Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Send message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-10-26T06:10:57.003Z",
+  "id": "0dR2D8Q4zE1lSlV8",
+  "isArchived": true,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Prueba agente Whatsapp",
+  "nodes": [
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "delusivealmaximo@gmail.com",
+          "mode": "list",
+          "cachedResultName": "delusivealmaximo@gmail.com"
+        },
+        "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}",
+        "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
+        "additionalFields": {
+          "description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', ``, 'string') }}",
+          "sendUpdates": "all",
+          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        2560,
+        976
+      ],
+      "id": "fbc0bcb5-0189-4ba6-8888-dd5a89f844b6",
+      "name": "Crear evento",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "CCn94B5JxUieK6ZO",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Utiliza esta herramienta para eliminar eventos del calendario.",
+        "operation": "delete",
+        "calendar": {
+          "__rl": true,
+          "value": "delusivealmaximo@gmail.com",
+          "mode": "list",
+          "cachedResultName": "delusivealmaximo@gmail.com"
+        },
+        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        2688,
+        976
+      ],
+      "id": "3d30df60-ec5e-4fbe-aff4-a5f59df70e66",
+      "name": "Eliminar evento",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "CCn94B5JxUieK6ZO",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "divisual@divisualproject.com",
+          "mode": "list",
+          "cachedResultName": "divisual@divisualproject.com"
+        },
+        "returnAll": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Return_All', ``, 'boolean') }}",
+        "timeMin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('After', ``, 'string') }}",
+        "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Before', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        2832,
+        976
+      ],
+      "id": "41e6a5cb-3526-4858-9758-03310131d2b4",
+      "name": "Comprobar disponibilidad",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "CCn94B5JxUieK6ZO",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
+      "typeVersion": 1,
+      "position": [
+        2304,
+        976
+      ],
+      "id": "22a64869-2a8a-4780-af3f-2f22ed642da3",
+      "name": "DeepSeek Chat Model",
+      "credentials": {
+        "deepSeekApi": {
+          "id": "vZe0GgvmREuRrbkv",
+          "name": "DeepSeek account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "updates": [
+          "messages"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "typeVersion": 1,
+      "position": [
+        2288,
+        752
+      ],
+      "id": "a748019d-aa47-4400-91ed-f132f59aa4c4",
+      "name": "WhatsApp Trigger",
+      "webhookId": "bd2217ba-e760-490a-8942-482edc782ac4",
+      "credentials": {
+        "whatsAppTriggerApi": {
+          "id": "iEEtlof5EFUptjw4",
+          "name": "WhatsApp OAuth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "822674507599302",
+        "recipientPhoneNumber": "=526674847346",
+        "textBody": "={{ $json.mensajeWhatsapp }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        3056,
+        752
+      ],
+      "id": "bcdda9f2-72d8-4f5e-a4b2-9b5f24ba0ff8",
+      "name": "Send message",
+      "webhookId": "9f1d916d-5cd5-402b-95f7-5f8d3792e8e1",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "kILEnXDyxKIKk573",
+          "name": "WhatsApp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.messages[0].text.body }}",
+        "options": {
+          "systemMessage": "=Eres el asistente virtual de Amairany Reyes, maquillista profesional. Tu función es ayudar a los clientes a agendar citas de forma natural, preguntando UN dato a la vez.\\n\\nINFORMACIÓN IMPORTANTE:\\n- Nombre de la maquillista: Amairany Reyes\\n- Servicio: Maquillaje profesional\\n- Horario: Lunes a Sábado, 10:00 AM a 8:00 PM\\n- Zona horaria: America/Mexico_City\\n\\nFLUJO:\\n1. Saluda y pregunta el nombre\\n2. Pregunta tipo de servicio\\n3. Pregunta fecha (valida lunes-sábado)\\n4. Pregunta hora (valida 10 AM - 8 PM)\\n5. Pregunta teléfono\\n6. Pregunta detalles adicionales\\n7. Presenta resumen y confirma\\n\\nCUANDO TENGAS TODOS LOS DATOS (nombre, tipo_servicio, fecha, hora, teléfono):\\n\\nResponde EXACTAMENTE en este formato JSON:\\n{\\n  \\\"tipo\\\": \\\"crear_evento\\\",\\n  \\\"nombre_cliente\\\": \\\"[NOMBRE COMPLETO]\\\",\\n  \\\"tipo_servicio\\\": \\\"[TIPO DE SERVICIO]\\\",\\n  \\\"fecha\\\": \\\"[YYYY-MM-DD]\\\",\\n  \\\"hora_inicio\\\": \\\"[HH:MM]\\\",\\n  \\\"telefono\\\": \\\"[TELÉFONO]\\\",\\n  \\\"notas\\\": \\\"[NOTAS O VACÍO]\\\",\\n  \\\"mensaje_confirmacion\\\": \\\"¡Perfecto! Tu cita ha sido confirmada. Amairany Reyes te espera el [FECHA] a las [HORA]. ¡Gracias por confiar en nuestros servicios! 💄✨\\\"\\n}\\n\\nSI EL USUARIO NO HA DADO TODOS LOS DATOS:\\nResponde de forma natural en conversación, preguntando solo UN dato faltante a la vez.\\n\\nREGLAS:\\n✅ Pregunta UN dato a la vez\\n✅ Usa emojis moderadamente\\n✅ Sé empático y profesional\\n✅ Cuando falten datos, NO devuelvas JSON, solo continúa la conversación\\n✅ Solo devuelve JSON cuando TENGAS COMPLETO: nombre, tipo_servicio, fecha, hora, teléfono\""
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        2496,
+        752
+      ],
+      "id": "e50f3908-b2b2-4cab-bbbc-c317325ac0f9",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "content": "## Agente Piloto: Amairany Reyes MakeUp Studio\n\n",
+        "height": 448,
+        "width": 832,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2208,
+        672
+      ],
+      "typeVersion": 1,
+      "id": "86d57275-6366-4951-86f2-13c2f53d1645",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "=",
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        2448,
+        976
+      ],
+      "id": "79501529-14d8-472e-82d1-8ac19c986532",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtener la respuesta del AI Agent\nconst aiResponse = $json.output;\n\n// Intentar parsear como JSON\nlet jsonData = null;\ntry {\n  jsonData = JSON.parse(aiResponse);\n} catch (e) {\n  // Si no es JSON, es solo conversación\n  jsonData = null;\n}\n\n// Si encontramos JSON con tipo \"crear_evento\"\nif (jsonData && jsonData.tipo === \"crear_evento\") {\n  // Convertir fecha a formato ISO\n  const fecha = new Date(jsonData.fecha);\n  const horaInicio = jsonData.hora_inicio.split(':');\n  const horaFin = new Date(fecha);\n  \n  fecha.setHours(horaInicio[0], horaInicio[1], 0);\n  horaFin.setHours(parseInt(horaInicio[0]) + 2, horaInicio[1], 0); // +2 horas para duración\n  \n  // Retornar datos para Google Calendar\n  return {\n    crearEvento: true,\n    calendarioParams: {\n      summary: `${jsonData.nombre_cliente} - Maquillaje (${jsonData.tipo_servicio})`,\n      description: `Cliente: ${jsonData.nombre_cliente}\\nTeléfono: ${jsonData.telefono}\\nServicio: ${jsonData.tipo_servicio}\\nNotas: ${jsonData.notas || 'Sin notas'}`,\n      start: fecha.toISOString(),\n      end: horaFin.toISOString(),\n      timezone: \"America/Mexico_City\"\n    },\n    mensajeWhatsapp: jsonData.mensaje_confirmacion\n  };\n} else {\n  // Solo es conversación, sin crear evento\n  return {\n    crearEvento: false,\n    mensajeWhatsapp: aiResponse\n  };\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2832,
+        752
+      ],
+      "id": "4428863a-97cd-4079-8472-8b2e848ed7ea",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-10-26T06:10:57.010Z",
+      "createdAt": "2025-10-26T06:10:57.010Z",
+      "role": "workflow:owner",
+      "workflowId": "0dR2D8Q4zE1lSlV8",
+      "projectId": "lwGqMVviuDwSu0q0"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-10-26T07:55:34.000Z",
+  "versionId": "b60dc762-ae4b-4fb0-9b65-0563bd478571"
+}
